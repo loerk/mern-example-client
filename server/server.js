@@ -2,11 +2,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 
 //custom modules importing
 import testRouter from './routes/testRouter.js';
-
+import { connectSync, connectDB } from './helpers/dbConnect.js';
 
 const server = express();
 
@@ -22,8 +23,23 @@ server.use(express.json()); // accessing the request body
     server.use('/test', testRouter);
 
 
-// defining a PORT variable 
+
+ // connecting to our db
+    // connecting syncronesslly
+    // connectSync(); : bad practise
+    // connecting async
+    connectDB();
+    mongoose.connection.on("open", () => {
+            console.log("connected to db")
+    });
+    mongoose.connection.on("error", (error) => {
+    console.log("Connection to MongoDB has faild ", error.message);
+        
+});
+    
+
+// defining a PORT variable
 const PORT = process.env.PORT;
 
 // listening to the PORT. and running the server
-server.listen(PORT, ()=>console.log(`Server is listening to port ${PORT} and running`))
+server.listen(PORT, () => console.log(`Server is listening to port ${PORT} and running`));
