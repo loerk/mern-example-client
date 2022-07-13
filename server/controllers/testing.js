@@ -7,9 +7,10 @@ export const getTest = (req, res) => {
 
 export const postTest = async (req, res) => {
     const { name } = req.body;
-    const newTest = new Test({ name });
+    // const newTest = new Test({ name });
     try {
-        await newTest.save();
+        // await newTest.save();
+        const newTest = await Test.create({ name });
         res.status(201).json(newTest);
     } catch (error) {
         res.status(409).json({ message: error.message });
