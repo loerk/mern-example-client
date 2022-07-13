@@ -4,7 +4,10 @@ import dotenv from 'dotenv';
 // loading environment variables
 dotenv.config();
 
-// connecting sync : for teaching pruposes
+
+/**
+ * connecting sync : for teaching pruposes
+ */
 export const connectSync = () => {
     mongoose.connect(process.env.MONGO_URI)
         .then(
@@ -17,7 +20,10 @@ export const connectSync = () => {
     // it waits for the promise to be evaluated ...
 }
 
-// connecting Async : best practise
+
+/**
+ * connecting Async : best practise
+ */
 export const connectDB = async() => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
