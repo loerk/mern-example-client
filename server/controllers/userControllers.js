@@ -8,14 +8,14 @@ import { createToken } from '../helpers/createToken.js';
  * 
  * @param {Request} req 
  * @param {Response} res 
- * @returns {void}
+ * @returns {Response} returns a response 
  * @desc registiration request controller
  */
 export const signup = async (req, res) => {
     const { email, password, confirmPassword, username } = req.body;
     try {
         // check for existing user with this email
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email }); 
         if (existingUser) return res.status(400).json({ message: "Email already exist" });
         // if the password and confirmPassword is matching
         if (password !== confirmPassword) return res.status(400).json({ message: "Passowrds don't match" });
@@ -32,7 +32,9 @@ export const signup = async (req, res) => {
        const token = createToken({
             username,
             id:Id
-        });
+       });
+        
+        // encrypt or hash the token then send it to frontend
 
         res.status(200).json({savedUser, token});
     } catch (err) {
