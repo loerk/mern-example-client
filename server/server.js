@@ -9,6 +9,8 @@ import mongoose from 'mongoose';
 import testRouter from './routes/testRouter.js';
 import userRouter from './routes/userRouter.js';
 import postMessageRouter from './routes/postMessageRouter.js';
+import storyRouter from './routes/storyRouter.js';
+
 
 import { connectSync, connectDB } from './helpers/dbConnect.js';
 
@@ -28,6 +30,8 @@ server.use(express.json()); // accessing the request body
     server.use('/user', userRouter);
     // posts routes
     server.use('/posts', postMessageRouter);
+    // story routes
+    server.use('/story', storyRouter);
 
 
  // connecting to our db
