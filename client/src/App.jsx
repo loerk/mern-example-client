@@ -2,6 +2,7 @@ import { Layout } from "antd";
 import styles from "./styles.js";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./components/Home/Home.jsx";
+import AppBar from "./components/AppBar/AppBar.jsx";
 const { Footer } = Layout;
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
   return (
     <Router>
       <Layout style={styles.layout}>
-        <div>Hello InstaBesties !! </div>
+        <AppBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/authform" element={<div>login or signup</div>} />
