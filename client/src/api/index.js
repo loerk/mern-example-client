@@ -81,4 +81,12 @@ export const likePost = (id) => api.put(`/posts/likepost/${id}`);
 export const deletePost = (id) => api.delete(`/posts/removepost/${id}`);
 
 
+export const fetchStories = () => api.get("/getstories");
+export const createStory = (newStory) => api.post("/createstory", newStory);
+export const updateStory = (id, updatedStory) =>
+  api.put(`/updatestory/${id}`, updatedStory);
+export const deleteStory = (id) => api.delete(`/deletestory/${id}`);
+export const likeStory = (id) => api.patch(`/likestory/${id}`);
+
+
 
