@@ -7,6 +7,9 @@ import styles from "./styles.js";
 const { Sider, Content } = Layout;
 
 const Home = () => {
+  const [selectedId, setSelectedId] = useState(null);
+  // context is important
+  // dispatched to the context
     return (
       <Layout>
         <Sider width={400} style={styles.sider}>
