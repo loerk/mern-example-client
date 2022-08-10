@@ -15,11 +15,10 @@ const Home = () => {
     return (
       <Layout>
         <Sider width={400} style={styles.sider}>
-          <div>Add your story</div>
-          {/*The Story Form */}
+          <StoryForm selectedId={selectedId} setSelectedId={setSelectedId} />
         </Sider>
         <Content style={styles.content}>
-         <StoryList setSelectedId={setSelectedId} />
+          <StoryList setSelectedId={setSelectedId} />
         </Content>
       </Layout>
     );
