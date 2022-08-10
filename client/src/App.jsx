@@ -3,6 +3,7 @@ import styles from "./styles.js";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./components/Home/Home.jsx";
 import AppBar from "./components/AppBar/AppBar.jsx";
+// import AuthForm
 const { Footer } = Layout;
 
 const App = () => {
