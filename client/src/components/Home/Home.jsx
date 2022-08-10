@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 //import storyForm and storyList
+import StoryList from "../StoryList/StoryList.jsx";
+import StoryForm from '../StoryForm/StoryForm.jsx';
 import styles from "./styles.js";
 // import the context
 
@@ -17,11 +19,7 @@ const Home = () => {
           {/*The Story Form */}
         </Sider>
         <Content style={styles.content}>
-          {/*The Story List */}
-          <ul>
-            <li>story one</li>
-            <li>story two</li>
-          </ul>
+         <StoryList setSelectedId={setSelectedId} />
         </Content>
       </Layout>
     );
