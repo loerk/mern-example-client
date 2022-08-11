@@ -10,7 +10,7 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form] = Form.useForm();
   const navigate = useNavigate();
- // const dispatch = useDispatch();
+ 
 
   const switchMode = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);

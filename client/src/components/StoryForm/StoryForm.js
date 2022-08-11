@@ -3,7 +3,7 @@ import { Card, Form, Input, Typography, Button } from "antd";
 import styles from "./styles";
 import FileBase64 from "react-file-base64";
 import { CloseOutlined, SendOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+
 
 import { Link } from "react-router-dom";
 
