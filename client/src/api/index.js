@@ -16,9 +16,9 @@ const api = axios.create({ baseURL: "http://localhost:8002" });
 
 api.interceptors.request.use(
     (req) => {
-        if (localStorage.getItem("profile")) {
+        if (localStorage.getItem("auth")) {
             req.headers.Authorization = `Bearer ${
-                JSON.parse(localStorage.getItem("profile")).token
+                JSON.parse(localStorage.getItem("auth")).token
             }`;
         }
 }
@@ -86,7 +86,7 @@ export const createStory = (newStory) => api.post("/createstory", newStory);
 export const updateStory = (id, updatedStory) =>
   api.put(`/updatestory/${id}`, updatedStory);
 export const deleteStory = (id) => api.delete(`/deletestory/${id}`);
-export const likeStory = (id) => api.put(`/likestory/${id}`);
+export const likeStory = (id) => api.patch(`/likestory/${id}`);
 
 
 
