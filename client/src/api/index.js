@@ -39,7 +39,9 @@ export const signup = (user) => api.post("/user/signup", user);
  * @param {formValues} user 
  * @returns {Promise<JSON>}
  */
-export const login = (user) => api.post("/user/signin", user);
+export const login = (user) => {
+    console.log("reached api")
+    api.post("/user/signin", user)};
 
 
 /**

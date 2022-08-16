@@ -3,6 +3,7 @@ import { Form, Input, Button, Card, Layout, Typography } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "./styles";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../context/auth/useAuth";
 
 
 const { Title } = Typography;
@@ -10,12 +11,35 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
+  const [userData, setUserData] = useState({
+    email:"",
+    password:"",
+    confirmPassword:"",
+    userName:""
+                }) 
+
+  const {signIn, signUp} = useAuth()
  
 
   const switchMode = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
   };
 
+  const onSubmit = (e) => {
+    
+
+    if(isLogin)
+    signIn(userData)
+    else signUp(userData)
+  } 
+
+   const changeHandler = (e) =>{
+    const elementName = e.target.name;
+    const value = e.target.value;
+
+    setUserData(oldState=>{return {...oldState, [elementName]: value }})
+  } 
 
 
   return (
@@ -34,7 +58,9 @@ const AuthForm = () => {
           size="large"
           wrapperCol={{ span: 20, offset: 2 }}
           
-        > {/*onFinish={onSubmit} */}
+          onFinish={onSubmit}
+          > 
+          
           {isLogin || (
             <Form.Item
               name="username"
@@ -45,7 +71,7 @@ const AuthForm = () => {
                 },
               ]}
             >
-              <Input prefix={<UserOutlined />} placeholder="Username" />
+              <Input prefix={<UserOutlined />} placeholder="Username" onChange={changeHandler} name="userName" />
             </Form.Item>
           )}
           <Form.Item
@@ -58,7 +84,7 @@ const AuthForm = () => {
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="E-mail address" />
+            <Input prefix={<MailOutlined />} placeholder="E-mail address" onChange={changeHandler} name="email"/>
           </Form.Item>
           <Form.Item
             name="password"
@@ -73,6 +99,8 @@ const AuthForm = () => {
               prefix={<LockOutlined />}
               type="password"
               placeholder="Password"
+              onChange={changeHandler} 
+              name="password"
             />
           </Form.Item>
           {isLogin || (
@@ -89,6 +117,8 @@ const AuthForm = () => {
                 prefix={<LockOutlined />}
                 type="password"
                 placeholder="Confirm Password"
+                onChange={changeHandler} 
+                name="confirmPassword"
               />
             </Form.Item>
           )}
@@ -97,6 +127,7 @@ const AuthForm = () => {
             <Button type="primary" htmlType="submit">
               {isLogin ? "Login" : "Join"}
             </Button>
+            
             <span style={{ margin: "0 10px 0 20px" }}>Or</span>
             <Button type="link" onClick={switchMode}>
               {isLogin ? "register now!" : "have an account?"}
