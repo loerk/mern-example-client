@@ -79,3 +79,8 @@ export const signin = async (req, res) => {
         });
     }
 }
+
+
+export const tokenValidator = (req, res) =>{
+    res.json(req.user)
+}

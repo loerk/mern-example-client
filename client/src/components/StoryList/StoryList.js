@@ -1,12 +1,13 @@
 import React from "react";
 import { Col, Row, Spin } from "antd";
 import Story from "../Story/Story.js";
+import useAuth from "../../context/auth/useAuth.js";
 
 
  const StoryList = ({ setSelectedId }) => {
 
 
-  
+  const {isAuthenticated} = useAuth()
 const stories = null; // context is required
   return !stories ? (
     <div
@@ -14,7 +15,7 @@ const stories = null; // context is required
         textAlign: "center",
       }}
     >
-      <Spin size="large" />
+      {!isAuthenticated?<Spin size="large" />: null}
     </div>
   ) : (
     <Row gutter={[48, 32]}>

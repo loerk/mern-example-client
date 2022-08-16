@@ -18,10 +18,12 @@ const Home = () => {
         // breakpoint="md"
         // collapsedWidth="0"
       >
+  
         <StoryForm selectedId={selectedId} setSelectedId={setSelectedId} />
       </Sider>
       <Content style={styles.content}>
         <StoryList setSelectedId={setSelectedId} />
+     
       </Content>
     </Layout>
   );

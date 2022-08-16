@@ -5,33 +5,39 @@ import Logo from "../../resources/img/InstaBesties.png";
 import styles from "./style";
 
 import decode from "jwt-decode";
+import useAuth from "../../context/auth/useAuth";
 
 const { Header } = Layout;
 const { Title } = Typography;
 const AppBar = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   
   const navigate = useNavigate();
   const location = useLocation();
+  const {user, isAuthenticated, tokenValidator, signOut} = useAuth()
 
   useEffect(() => {
-    const token = user?.token;
+ /*    const token = user?.token;
 
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
-
+    
     setUser(JSON.parse(localStorage.getItem("profile")));
+    */
+
+     if(localStorage.getItem("auth")) tokenValidator()
   }, [location]);
 
   const logout = () => {
-    
+    signOut()
     navigate("/authform");
-    setUser(null);
+    //setUser(null);
   };
   return (
     <Header style={styles.header}>
+  
       <Link to="/">
         <div style={styles.homeLink}>
           <Image preview={false} width={45} src={Logo} />
@@ -39,7 +45,7 @@ const AppBar = () => {
           <Title style={styles.title}>InstaBesties</Title>
         </div>
       </Link>
-      {!user ? (
+      {!isAuthenticated ? (
         <Link to="/authform">
           <Button style={styles.login} htmlType="button">
             Log In
@@ -48,10 +54,12 @@ const AppBar = () => {
       ) : (
         <div style={styles.userInfo}>
           <Avatar style={styles.avatar} alt="username" size="large">
-            {user.result.username.charAt(0).toUpperCase()}
+            {/* {user.result.username.charAt(0).toUpperCase()} */}
+              {user.username.charAt(0).toUpperCase()}  
           </Avatar>
           <Title style={styles.title} level={4}>
-            {user.result.username}
+           {/*  {user.result.username} */}
+             {user.username} 
           </Title>
           <Button htmlType="button" onClick={logout}>
             Log Out

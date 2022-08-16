@@ -2,7 +2,8 @@ import { Router } from 'express';
 
 
 // importing the controllers
-import { signup, signin } from '../controllers/userControllers.js';
+import { signup, signin, tokenValidator } from '../controllers/userControllers.js';
+import { auth } from '../middlewares/verifyToken.js';
 
 const router = Router();
 
@@ -21,5 +22,7 @@ router.post('/signup', signup);
  * @access PUblic
  */
 router.post('/signin', signin);
+
+router.get("/tokenValidation", auth, tokenValidator )
 
 export default router;

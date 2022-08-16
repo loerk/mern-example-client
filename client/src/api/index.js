@@ -14,25 +14,40 @@ const api = axios.create({ baseURL: "http://localhost:8002" });
     * if yes then use that token with every request
 */
 
-api.interceptors.request.use(
-    (req) => {
-        if (localStorage.getItem("auth")) {
-            req.headers.Authorization = `Bearer ${
-                JSON.parse(localStorage.getItem("auth")).token
+/* api.interceptors.request.use(
+
+     (req) => {
+         if (localStorage.getItem("auth")) {
+             req.headers.Authorization = `Bearer ${
+                 localStorage.getItem("auth")
             }`;
         }
-}
-);
-
-/**
- * Auth requests
- */
-/**
- * 
- * @param {formValues} user 
- * @returns {Promise<JSON>}
- */
-export const signup = (user) => api.post("/user/signup", user);
+    } 
+    ); */
+    
+    /**
+     * Auth requests
+     */
+    /**
+     * 
+     * @param {formValues} user 
+     * @returns {Promise<JSON>}
+     */
+    export const signup = (user) => api.post("/user/signup", user);
+    
+    /**
+     * 
+     
+     * @returns {Promise<JSON>}
+     */
+ export const validateToken = () => {
+    return api.get("/user/tokenValidation" ,{
+        headers:{
+            "Authorization" : `Bearer ${
+                localStorage.getItem("auth")}`
+        }
+    } )
+};
 
 /**
  * 
@@ -40,8 +55,8 @@ export const signup = (user) => api.post("/user/signup", user);
  * @returns {Promise<JSON>}
  */
 export const login = (user) => {
-    console.log("reached api")
-    api.post("/user/signin", user)};
+    
+    return api.post("/user/signin", user)};
 
 
 /**

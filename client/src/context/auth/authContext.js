@@ -9,34 +9,70 @@ export const AuthProvider = ({children}) =>{
 
     const [state, dispatch] = useReducer(authReducer, authState);
 
-    const signIn = async (formData) => {
+    const signIn = async (formData, navigate) => {
 
         try{
-            const data = await api.login(formData)
-            dispatch({type :"AUTH_SIGNIN", payload: data})
+            const response = await api.login(formData)
+            console.log("response in signin", response)
+   
+                dispatch({type :"AUTH_SIGNIN", payload: response.data})
+                localStorage.setItem("auth",response.data.token )
+                navigate("/")
 
-        }
-        catch(err){
-            console.log(err)
+            }
+            catch(err){
+            dispatch({type:"SIGNIN_ERR", payload:err.message})
         }
     }
 
-    const signUp = async (formData) => {
+    const signUp = async (formData, navigate) => {
 
         try{
-            const data = await api.signup(formData)
-            dispatch({type :"AUTH_SIGNUP", payload: data.savedUser})
+            const response = await api.signup(formData)
+            dispatch({type :"AUTH_SIGNUP", payload: response.data.savedUser}) 
+            navigate("/")
 
         }
         catch(err){
-            console.log(err)
+            dispatch({type:"SIGNIN_ERR", payload:err.message})
         }
     }
+
+    const tokenValidator = async () =>{
+        
+        try{
+            const response = await api.validateToken()
+            dispatch({type :"AUTH_VALID", payload: {username: response.data.username, id: response.data.id}})
+        }
+        catch(err){
+            console.log(err)
+        } 
+
+    }
+
+    const signOut = () => {
+        dispatch({type :"SIGN_OUT"})
+        if(localStorage.getItem("auth")) localStorage.removeItem("auth")
+        
+    }
+
+    const resetError = () => {
+        dispatch({type :"CLR_ERR"})
+        
+    }
+
 
     const value ={
         signIn,
         signUp,
-        isAuthenticated: state.isAuthenticated
+        signOut,
+        isAuthenticated: state.isAuthenticated,
+        error: state.error,
+        user:state.user,
+        tokenValidator,
+        resetError
+        
+        
     }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

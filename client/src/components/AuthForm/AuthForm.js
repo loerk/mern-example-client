@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, Layout, Typography } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "./styles";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import useAuth from "../../context/auth/useAuth";
 
 
@@ -12,14 +12,19 @@ const AuthForm = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
+
   const [userData, setUserData] = useState({
     email:"",
     password:"",
     confirmPassword:"",
-    userName:""
+    username:""
                 }) 
 
-  const {signIn, signUp} = useAuth()
+  const {signIn, signUp, error, resetError, isAuthenticated} = useAuth()
+
+  useEffect(()=>{
+    if(isAuthenticated) navigate("/")
+  })
  
 
   const switchMode = () => {
@@ -30,13 +35,14 @@ const AuthForm = () => {
     
 
     if(isLogin)
-    signIn(userData)
-    else signUp(userData)
+    signIn(userData, navigate)
+    else signUp(userData, navigate)
   } 
 
    const changeHandler = (e) =>{
     const elementName = e.target.name;
     const value = e.target.value;
+    resetError()
 
     setUserData(oldState=>{return {...oldState, [elementName]: value }})
   } 
@@ -71,7 +77,7 @@ const AuthForm = () => {
                 },
               ]}
             >
-              <Input prefix={<UserOutlined />} placeholder="Username" onChange={changeHandler} name="userName" />
+              <Input prefix={<UserOutlined />} placeholder="Username" onChange={changeHandler} name="username" />
             </Form.Item>
           )}
           <Form.Item
@@ -134,6 +140,7 @@ const AuthForm = () => {
             </Button>
           </Form.Item>
         </Form>
+        {error? <p>{error}</p>:null}
       </Card>
     </Layout>
   );

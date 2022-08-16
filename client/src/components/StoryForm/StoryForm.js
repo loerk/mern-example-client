@@ -6,6 +6,7 @@ import { CloseOutlined, SendOutlined } from "@ant-design/icons";
 
 
 import { Link } from "react-router-dom";
+import useAuth from "../../context/auth/useAuth";
 
 const { Title } = Typography;
 
@@ -14,7 +15,7 @@ const StoryForm = ({ selectedId, setSelectedId }) => {
  
   const story = null; // context is required
   
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const {user, isAuthenticated} = useAuth()
   const username = user?.result?.username;
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const StoryForm = ({ selectedId, setSelectedId }) => {
     setSelectedId(null);
   };
 
-  if (!user) {
+  if (!isAuthenticated) {
     return (
       <Card style={styles.formCard}>
         <Title level={4}>
