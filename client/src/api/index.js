@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // init axios instance
 
@@ -6,13 +6,12 @@ import axios from 'axios';
  * Create new instance of axios with a custom config
  */
 
-const api = axios.create({ baseURL: "http://localhost:8002" });
+const api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_SERVER });
 
-
-/* 
-    * check if there is a token provided (localStorage ) before sending the request
-    * if yes then use that token with every request
-*/
+/*
+ * check if there is a token provided (localStorage ) before sending the request
+ * if yes then use that token with every request
+ */
 
 /* api.interceptors.request.use(
 
@@ -24,79 +23,77 @@ const api = axios.create({ baseURL: "http://localhost:8002" });
         }
     } 
     ); */
-    
-    /**
-     * Auth requests
-     */
-    /**
-     * 
-     * @param {formValues} user 
-     * @returns {Promise<JSON>}
-     */
-    export const signup = (user) => api.post("/user/signup", user);
-    
-    /**
+
+/**
+ * Auth requests
+ */
+/**
+ *
+ * @param {formValues} user
+ * @returns {Promise<JSON>}
+ */
+export const signup = (user) => api.post("/user/signup", user);
+
+/**
      * 
      
      * @returns {Promise<JSON>}
      */
- export const validateToken = () => {
-    return api.get("/user/tokenValidation" ,{
-        headers:{
-            "Authorization" : `Bearer ${
-                localStorage.getItem("auth")}`
-        }
-    } )
+export const validateToken = () => {
+  return api.get("/user/tokenValidation", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("auth")}`,
+    },
+  });
 };
 
 /**
- * 
- * @param {formValues} user 
+ *
+ * @param {formValues} user
  * @returns {Promise<JSON>}
  */
 export const login = (user) => {
-    
-    return api.post("/user/signin", user)};
-
+  return api.post("/user/signin", user);
+};
 
 /**
  * Post requests
  */
 /**
- * 
+ *
  * @returns {Promise<JSON>}
  */
 export const fetchPosts = () => api.get("/posts/getposts");
 
 /**
- * 
- * @param {formValues} newPost 
+ *
+ * @param {formValues} newPost
  * @returns {Promise<JSON>}
  */
 export const createPost = (newPost) => api.post("/posts/addpost", newPost);
 
 /**
- * 
- * @param {ObjectId} id 
- * @param {formValues} updatedPost 
+ *
+ * @param {ObjectId} id
+ * @param {formValues} updatedPost
  * @returns {Promise<JSON>}
  */
-export const updatePost = (id, updatedPost) => api.put(`/posts/editpost/${id}`, updatedPost);
+export const updatePost = (id, updatedPost) =>
+  api.put(`/posts/editpost/${id}`, updatedPost);
 
 /**
- * 
- * @param {ObjectId} id 
+ *
+ * @param {ObjectId} id
  * @returns {Promise<JSON>}
  */
 export const likePost = (id) => api.put(`/posts/likepost/${id}`);
 
 /**
- * 
- * @param {ObjectId} id 
+ *
+ * @param {ObjectId} id
  * @returns {Promise<JSON>}
  */
 export const deletePost = (id) => api.delete(`/posts/removepost/${id}`);
-
 
 export const fetchStories = () => api.get("/getstories");
 export const createStory = (newStory) => api.post("/createstory", newStory);
@@ -104,6 +101,3 @@ export const updateStory = (id, updatedStory) =>
   api.put(`/updatestory/${id}`, updatedStory);
 export const deleteStory = (id) => api.delete(`/deletestory/${id}`);
 export const likeStory = (id) => api.patch(`/likestory/${id}`);
-
-
-
